@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>weather</title>
+  </head>
+  <body>
+    <nav
+      id="nav"
+      class="d-flex justify-content-between container align-items-center"
+    >
+      <h1>weather</h1>
+
+      <div
+        class="find form-control w-auto p-0 bg-transparent border-0 position-relative"
+      >
+        <input
+          class="border-0"
+          placeholder="search"
+          type="search"
+          name="city"
+          id="search"
+        />
+
+        <ul id="listData" class="position-absolute"></ul>
+      </div>
+    </nav>
+
+    <main class="container mt-3">
+      <header class="">
+        <div class="card py-2 px-3 pt-1 gap-2">
+          <div
+            class="location d-flex flex-column align-items-start justify-content-between w-100"
+          >
+            <p id="city">city</p>
+
+            <div class="time d-flex gap-3">
+              <p id="day">day</p>
+              <p id="date">12/12/1254</p>
+            </div>
+          </div>
+          <div class="condition info">
+            <p>temp</p>
+            <div class="image">
+              <img src="" alt="" />
+            </div>
+            <p>condition</p>
+          </div>
+
+          <div class="times"></div>
+          <!-- 
+          <div class="temp">
+            <h3 id="temp">32</h3>
+            <div class="d-flex align-items-center">
+              <img src="" id="icon" alt="icon " />
+              <p id="description-text">sunny</p>
+            </div>
+          </div>
+
+          <div class="wind info">
+            <div class="d-flex gap-2 align-items-center">
+              <i class="fa fa-wind"></i>
+              <h4 class="">wind</h4>
+            </div>
+
+            <p id="wind">30 rph</p>
+          </div> -->
+          <!-- 
+          <div class="humidity info">
+            <div class="d-flex gap-2 align-items-center">
+              <i class="fa-solid fa-droplet"></i>
+              <h4 class="">humidity</h4>
+            </div>
+
+            <p id="humidity">64</p>
+          </div>
+
+          <div class="pressure info">
+            <div class="d-flex gap-2 align-items-center">
+              <i class="fa-solid fa-circle-dot"></i>
+              <h4 class="">pressure</h4>
+            </div>
+
+            <p id="pressure">64</p>
+          </div>
+
+          <div class="uv info">
+            <div class="d-flex gap-2 align-items-center">
+              <i class="fa-solid fa-sun"></i>
+              <h4 class="">UV Index</h4>
+            </div>
+
+            <p id="uv">64</p>
+          </div> -->
+
+          <div class="rotary"></div>
+        </div>
+      </header>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
