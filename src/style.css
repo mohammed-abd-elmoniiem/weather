@@ -164,23 +164,27 @@ img#icon{
   background-color: var(--bg-color-transparent-white);
   border-radius: 8px;
   padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   
  }
-div.info i{
-  font-size: 25px;
-}
- div.info h4{
-  font-size: 17px;
-  font-weight: 400;
-  text-transform: capitalize;
-  line-height: 20px;
+ div.info>div{
+  display: flex;
+  justify-content:flex-start;
+  align-items: center;
+  gap: 5px;
  }
+div.info i{
+  font-size: 20px;
+}
+
 
  div.info p{
   text-align: end;
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 25px;
+  font-weight: 400;
  }
 
 div.rotary{
