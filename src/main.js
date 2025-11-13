@@ -64,7 +64,7 @@ function display(result){
    createWeatherInfo('wind',`${todayForecast["maxwind_kph"]} kph`,'fa-solid fa-wind')
 
 // temperature info
-  createWeatherInfo('temperature', `${todayForecast['maxtemp_c']}/${todayForecast['mintemp_c']} ْ C`  ,'fa-solid fa-sun',true);
+  createWeatherInfo('temperature', `${todayForecast['maxtemp_c']}/${todayForecast['mintemp_c']}  ْ  C`  ,'fa-solid fa-sun',true);
 
 
   var condition = document.querySelector('div.condition');

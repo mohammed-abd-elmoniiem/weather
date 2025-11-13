@@ -1,8 +1,8 @@
 
 
 :root{
-  --bg-color-transparent:#0000008a;
-  --bg-color-transparent-white:#bebebe28;
+  --bg-color-transparent:#0000009d;
+  --bg-color-transparent-white:#ffffff1f;
   --text-color:#f8f8f8;
   --bg-dark:#222222;
 
@@ -39,6 +39,7 @@ body{
 nav{
   
     background: var(--bg-color-transparent);
+  /* background-color: var(--bg-dark) !important; */
     justify-self: flex-start !important;
     height: 50px;
 
@@ -64,12 +65,17 @@ div.form-control{
   color: var(--text-color) !important;
 }
 input[type='search']{
-  background-color: var(--bg-color-transparent-white);
-  color: var(--text-color);
+  background-color: var(--bg-color-transparent);
+  color: var(--text-color) !important;
   padding: 4px;
+}
+input[type='search']::placeholder{
+  color: var(--text-color) !important;
+
 }
 input[type='search']:focus{
   box-shadow: none !important;
+  border: none !important;
 }
 
 #listData{
@@ -82,6 +88,7 @@ input[type='search']:focus{
   
   border-radius: 8px;
   padding: 0;
+
 }
 li{
   padding: 5px;
@@ -119,7 +126,7 @@ div.times{
   grid-column: 1/-1;
 }
 div.location>p:first-of-type{
-      font-size: 40px;
+      font-size: 55px;
       font-weight: 400;
       text-transform: uppercase;
     }
@@ -228,8 +235,9 @@ display: flex;
 width: 100%;
 overflow-x: scroll;
 background: var(--bg-color-transparent-white);
-/* padding: 0 15px; */
+/* padding: 3px; */
 border-radius: 8px;
+  border: 1px solid var(--bg-color-transparent-white);
 }
 
 div.times * {
@@ -248,7 +256,7 @@ padding-top: 25px;
 padding-bottom: 10px;
 }
 .sun-change{
-  border-left: 1px solid var(--bg-color-transparent-white);
+  /* border-left: 1px solid var(--bg-color-transparent-white); */
 }
 .sun-change::after{
   content: attr(sun);
