@@ -2,7 +2,7 @@
 
 :root{
   --bg-color-transparent:#0000009d;
-  --bg-color-transparent-white:#ffffff1f;
+  --bg-color-transparent-white:#ffffff11;
   --text-color:#f8f8f8;
   --bg-dark:#222222;
 
@@ -23,7 +23,7 @@ li{list-style: none;}
 body{
  
   /* min-height: 100vh; */
-    background: url('/images/rain1.jpg') center / cover no-repeat;
+    background:linear-gradient(#0000004f, #000000a2) center /cover, black  url('/images/rain1.jpg') center / cover no-repeat  ;
     /* min-height: 100vh; */
 
     color: var(--text-color) !important;
