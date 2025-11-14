@@ -41,10 +41,13 @@ var nextDayDiv = document.querySelector('div.next-days');
 function next14dDay(forecastday){
 
 
+
+
+
+  var svg =document.querySelector('svg');
   
-  
-  var width = nextDayDiv.getBoundingClientRect().width < 450 ? 450 :nextDayDiv.getBoundingClientRect().width;
-  var height = nextDayDiv.getBoundingClientRect().height;
+  var width = svg.getBoundingClientRect().width
+  var height = svg.getBoundingClientRect().height;
 
   
 
@@ -82,12 +85,12 @@ function next14dDay(forecastday){
   
     // max line
     arrMax+= `L${x} ${yMax}`
-    arrMaxPoints +=`<circle  class="${DAY == i ? "active":""}"  stroke="#ffffffd8" cx="${x}" cy="${yMax}" r="4" />`
+    arrMaxPoints +=`<circle  class="${DAY == i ? "active":""}"  stroke="#fac000ff" cx="${x}" cy="${yMax}" r="4" />`
     arrMAXdegree += ` <text x="${x}" y="${yMax}" dx="0" dy="-10">${forecastday[i].day['maxtemp_c'] }ْ c</text>`;
     // min line
 
      arrMin+= `L${x} ${yMin}`
-    arrMinPoints +=`<circle class="${DAY == i ? "active":""}"  stroke=" #ffffffd8" cx="${x}" cy="${yMin}" r="4" />`
+    arrMinPoints +=`<circle class="${DAY == i ? "active":""}"  stroke=" #fac000ff" cx="${x}" cy="${yMin}" r="4" />`
     arrMindegree += ` <text x="${x}" y="${yMin}" dx="0" dy="17">${forecastday[i].day['mintemp_c'] }ْ c</text>`;
 
     // date
@@ -123,9 +126,9 @@ function next14dDay(forecastday){
   
    
   <path d=" M${ firstMaxPoint[0]} ${ firstMaxPoint[1]}  ${arrMax} "
-  style="fill:none;stroke: #b6b6b6d8;stroke-width:1" />
+  style="fill:none;stroke: #ffffffff;stroke-width:1" />
 
-   <g class="maxtemp" stroke="#b6b6b6d8" stroke-width="2" fill="#000000">
+   <g class="maxtemp" stroke="#fac000ff" stroke-width="2" fill="#000000">
     ${arrMaxPoints}
   </g>
 
@@ -135,9 +138,9 @@ function next14dDay(forecastday){
   </g>
 
    <path d=" M${ firstMinPoint[0]} ${ firstMinPoint[1]}  ${arrMin} "
-  style="fill:none;stroke: #b6b6b6d8;stroke-width:1" />
+  style="fill:none;stroke: #ffffffff;stroke-width:1" />
 
-   <g class="mintemp" stroke="#b6b6b6d8" stroke-width="2" fill="#000000">
+   <g class="mintemp" stroke="#fac000ff" stroke-width="2" fill="#000000">
     ${arrMinPoints}
   </g>
 
@@ -153,7 +156,7 @@ function next14dDay(forecastday){
   
   `
 
-  document.querySelector('svg').innerHTML = str2
+  svg.innerHTML = str2
 
 
   // coloring the today points
@@ -304,8 +307,8 @@ document.querySelector('div.next-day-btn>i.fa-arrow-circle-left').addEventListen
 function nextDayPoints(){
 
   var currentPointMax = document.querySelector('svg g.maxtemp circle.active');
-  currentPointMax.setAttribute('stroke','white');
-  currentPointMax.setAttribute('r','3');
+  currentPointMax.setAttribute('stroke','#fac000ff');
+  currentPointMax.setAttribute('r','4');
   currentPointMax.classList.remove('active')
 
  
@@ -330,8 +333,8 @@ function nextDayPoints(){
 
   // min temp
   var currentPointMin = document.querySelector('svg g.mintemp circle.active');
-  currentPointMin.setAttribute('stroke','white');
-  currentPointMin.setAttribute('r','3');
+  currentPointMin.setAttribute('stroke','#fac000ff');
+  currentPointMin.setAttribute('r','4');
   currentPointMin.classList.remove('active')
 
 
