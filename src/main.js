@@ -91,7 +91,7 @@ function next14dDay(forecastday){
     arrMindegree += ` <text x="${x}" y="${yMin}" dx="0" dy="17">${forecastday[i].day['mintemp_c'] }ْ c</text>`;
 
     // date
-    arrdate += ` <text x="${x}" y="0" fill="#b6b6b6d8" dx="0" dy="${height-40}">${forecastday[i].date.match(/(?<=-)\d{1,2}-\d{1,2}/i)[0] }</text>`
+    arrdate += ` <text x="${x}" y="0" fill="#b6b6b6d8" dx="0" dy="${height-5}">${forecastday[i].date.match(/(?<=-)\d{1,2}-\d{1,2}/i)[0] }</text>`
     
 
   }

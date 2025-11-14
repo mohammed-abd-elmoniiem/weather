@@ -224,19 +224,25 @@ span.small-info {
   font-size: 13px;
   font-weight: 300;
   text-transform: capitalize;
-  transform: translateY(-120%) translateX(-20px) ;
+  
 
  
 }
 
-
+div.next-days>span{
+position: absolute;
+  top: 0;
+  left: 30px;
+  z-index: 15;
+  width: fit-content;
+}
 
 div.next-day-btn {
-  position: sticky;
+  position: absolute;
   top: 14%;
   left: 30px;
   z-index: 15;
-  width: 200px;
+  width: fit-content;
 
 
 }
