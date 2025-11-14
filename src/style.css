@@ -45,31 +45,21 @@ nav{
     justify-self: flex-start !important;
     height: 50px;
 
-    margin-top: 10px;
-   
-   
-    
-    
+  
    
   }
 
- main{
-  min-height: calc(100vh - 50px );
 
-  display: flex;
-    flex-direction: column;
-    justify-content:center;
-    align-items: center;
- }
 
 div.form-control{
   box-shadow: none !important;
   color: var(--text-color) !important;
+ 
 }
 input[type='search']{
-  background-color: var(--bg-color-transparent);
+  background-color: var(--bg-color-transparent-white);
   color: var(--text-color) !important;
-  padding: 4px;
+  padding: 4px; border-radius: 5px;
 }
 input[type='search']::placeholder{
   color: var(--text-color) !important;
@@ -106,12 +96,8 @@ li:hover{
 div.card *{
   /* border: red 1px solid; */
 }
-svg{
-  width: 100%;
-  min-width: 450px !important;
-  overflow-x: auto;
-}
-div.card{
+
+div.card1{
     background-color: var(--bg-color-transparent);
     
     color: inherit;
@@ -123,41 +109,7 @@ div.card{
    
   }
 
-  /* next day  */
-
-div.next-days{
-  border: var(--bg-color-transparent-white) solid 1px;
-  background-color: var(--bg-color-transparent-white);
-  border-radius: 8px;
-  height: 200px;
   
-  grid-column: 1/-1;
-  padding: 0 !important;
-  overflow-x:auto;
-  overflow-y: hidden;
-  width: 100%;
-  /* padding-left: 20px; */
-}
-
- span.small-info{
-  color: var(--text-color2);
-  font-size: 13px;
-  font-weight: 300;
-  text-transform: capitalize;
-}
-
-
-div.next-day-btn{
-  /* border: red solid; */
-  top: 10%;
-  z-index: 15;
-
-  right: 0;
-}
-
-
-
-
 div.location{
   grid-column: 1/-1;
 }
@@ -175,7 +127,7 @@ div.location>p:first-of-type{
       text-transform: uppercase;
     }
 div.location div.time p{
-  font-size: 20px;
+  font-size: 17px !important;
   font-weight: 400px;
   letter-spacing: 1.5px;
 }
@@ -220,64 +172,75 @@ img#icon{
   align-items: center;
   gap: 5px;
  }
+div.info>div>span{
+  font-weight: 300;
+  font-size: 15px;
+}
 div.info i{
-  font-size: 20px;
+  font-size: 18px;
 }
 
 
  div.info p{
   text-align: end;
-  font-size: 25px;
-  font-weight: 400;
- }
-
-div.rotary{
-  position: relative; 
-  transform: translate(50%,270px);
-  
-}
- div.rotary div.time{
-
-  height: fit-content;
-  display: flex;
-  
-  width: fit-content;
- 
+  font-size: 19px;
   font-weight: 300;
-  font-size: 12px;
-  transform-origin:center bottom;
-  position: absolute;
- 
-
- 
-
-
  }
 
-div.rotary div.time>div{
-      display: flex; 
-      gap: 15px;
-      flex-direction: row;
-      align-items: center;
-      width: 100px;
-      height: 30px;
-     
-      color: #222222;
-    }
+/* start of days */
+svg {
+  width: 100%;
+  min-width: 500px !important;
+  overflow-x: auto;
+  position: relative;
+}
+svg circle{
+  transform-box: fill-box;
+  transform-origin: center center;
+  transition: transform 0.2s;
+}
+svg  circle:hover{
+  transform: scale(1.4);
+}
 
- div.rotary div.time  *{
-  height: fit-content;
-  
- }
- div.rotary div.time div.img{
-  width: 35px;
- }
+/* next day  */
 
-div.rotary div.time div.img img{
-width: 100%;
+div.next-days {
+  border: var(--bg-color-transparent-white) solid 1px;
+  background-color: var(--bg-color-transparent-white);
+  border-radius: 8px;
+  height: 200px;
+
+  grid-column: 1/-1;
+  padding: 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  /* padding-left: 20px; */
+}
+
+span.small-info {
+  color: var(--text-color2);
+  font-size: 13px;
+  font-weight: 300;
+  text-transform: capitalize;
 }
 
 
+div.previous-day-btn,
+div.next-day-btn {
+  position: sticky;
+  top: 14%;
+  left: 30px;
+  z-index: 15;
+  width: fit-content;
+
+
+}
+
+
+
+ /* start of the hour */
 div.times {
 display: flex;
 width: 100%;
@@ -341,7 +304,7 @@ div.times div.time.active{
 
  @media  screen and (min-width:762px) {
 
-  div.card {
+  div.card1 {
       
       grid-template-columns: repeat(4, 1fr);
       /* grid-template-rows: repeat(3,200px); */
@@ -389,3 +352,75 @@ width: auto;
   }
   
  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /* dash */
+
+ /* 
+ div.rotary {
+   position: relative;
+   transform: translate(50%, 270px);
+
+ }
+
+ div.rotary div.time {
+
+   height: fit-content;
+   display: flex;
+
+   width: fit-content;
+
+   font-weight: 300;
+   font-size: 12px;
+   transform-origin: center bottom;
+   position: absolute;
+
+
+
+
+
+ }
+
+ div.rotary div.time>div {
+   display: flex;
+   gap: 15px;
+   flex-direction: row;
+   align-items: center;
+   width: 100px;
+   height: 30px;
+
+   color: #222222;
+ }
+
+ div.rotary div.time * {
+   height: fit-content;
+
+ }
+
+ div.rotary div.time div.img {
+   width: 35px;
+ }
+
+ div.rotary div.time div.img img {
+   width: 100%;
+ }
+ */
