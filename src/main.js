@@ -6,6 +6,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 
 
 import './style.css'
+import gsap from 'gsap';
 
 var City = 'cairo'
 var DAY = 0;
@@ -17,23 +18,7 @@ var weatherData = null;
 // initail 
 // getWeatherData() 
 
-getFutureWeather()
-
-
-// async function getWeatherData (city = "cairo"){
-
-// const API = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`
-
-
-//   var response = await fetch(API);
-//   var result = await response.json()
-//   console.log(result)
-  
-
-//   display(result)
-//   backgroundCange(result.current.condition.text)
-// }
-var nextDayDiv = document.querySelector('div.next-days');
+getWeatherData()
 
 
 
@@ -65,17 +50,17 @@ function next14dDay(forecastday){
   
 
  
-
+   var numberDays = 8
 
 
 
   
-   var firstMaxPoint = [ (1/15)*width , (height*0.7  - ( forecastday[0].day['maxtemp_c'] / 40)* height*0.4)];
-   var firstMinPoint = [ (1/15)*width , (height*0.7  - ( forecastday[0].day['mintemp_c'] / 40)* height*0.4)];
+   var firstMaxPoint = [ (1/numberDays)*width , (height*0.7  - ( forecastday[0].day['maxtemp_c'] / 40)* height*0.4)];
+   var firstMinPoint = [ (1/numberDays)*width , (height*0.7  - ( forecastday[0].day['mintemp_c'] / 40)* height*0.4)];
 
   for (var i = 0 ; i < forecastday.length ;i++){
   
-    var   x = ((i+1)/15)*width ;
+    var   x = ((i+1)/numberDays)*width ;
 
     var  yMax  = (height*0.7  - ( forecastday[i].day['maxtemp_c'] / 40)* height*0.4)  ;
     var  yMin = (height*0.7  - ( forecastday[i].day['mintemp_c'] / 40)* height*0.4)  ;
@@ -94,7 +79,7 @@ function next14dDay(forecastday){
     arrMindegree += ` <text x="${x}" y="${yMin}" dx="0" dy="17">${forecastday[i].day['mintemp_c'] }ْ c</text>`;
 
     // date
-    arrdate += ` <text x="${x}" y="0" fill="#b6b6b6d8" dx="0" dy="${height-5}">${forecastday[i].date.match(/(?<=-)\d{1,2}-\d{1,2}/i)[0] }</text>`
+    arrdate += ` <text x="${x}" y="0" fill="#ffffffd8" dx="0" dy="${height-5}">${forecastday[i].date.match(/(?<=-)\d{1,2}-\d{1,2}/i)[0] }</text>`
     
 
   }
@@ -125,30 +110,30 @@ function next14dDay(forecastday){
    var str2 = `
   
    
-  <path d=" M${ firstMaxPoint[0]} ${ firstMaxPoint[1]}  ${arrMax} "
+  <path id="maxPath" d=" M${ firstMaxPoint[0]} ${ firstMaxPoint[1]}  ${arrMax} "
   style="fill:none;stroke: #ffffffff;stroke-width:1" />
 
    <g class="maxtemp" stroke="#fac000ff" stroke-width="2" fill="#000000">
     ${arrMaxPoints}
   </g>
 
-  <g font-size="10" font-family="sans-serif" fill="white" text-anchor="middle">
+  <g class="maxtemp" font-size="10" font-family="sans-serif" fill="white" text-anchor="middle">
     ${arrMAXdegree}
     
   </g>
 
-   <path d=" M${ firstMinPoint[0]} ${ firstMinPoint[1]}  ${arrMin} "
+   <path id="minPath" d=" M${ firstMinPoint[0]} ${ firstMinPoint[1]}  ${arrMin} "
   style="fill:none;stroke: #ffffffff;stroke-width:1" />
 
    <g class="mintemp" stroke="#fac000ff" stroke-width="2" fill="#000000">
     ${arrMinPoints}
   </g>
 
-  <g font-size="10" font-family="sans-serif" fill="white" text-anchor="middle">
+  <g  class="mintemp" font-size="10" font-family="sans-serif" fill="white" text-anchor="middle">
     ${arrMindegree}
     
   </g>
-  <g font-size="10" font-family="sans-serif" fill="white" text-anchor="middle">
+  <g font-size="11" font-family="sans-serif" fill="white" text-anchor="middle">
     ${arrdate}
     
   </g>
@@ -158,6 +143,80 @@ function next14dDay(forecastday){
 
   svg.innerHTML = str2
 
+  // animating path
+  var maxPath = document.getElementById('maxPath');
+  var maxPathLenght = maxPath.getTotalLength();
+  gsap.set(maxPath,{
+    strokeDasharray:maxPathLenght,
+    strokeDashoffset:maxPathLenght,
+    
+  });
+  gsap.to(maxPath,{
+    strokeDashoffset:0,
+    duration:2,
+    delay:1
+  });
+
+
+
+   var minPath = document.getElementById('minPath');
+  var minPathLenght = minPath.getTotalLength();
+  gsap.set(minPath,{
+    strokeDasharray:minPathLenght,
+    strokeDashoffset:minPathLenght,
+    
+  });
+  gsap.to(minPath,{
+    strokeDashoffset:0,
+    duration:2,
+    delay:1
+  });
+
+  
+  gsap.from('g.maxtemp circle ',{
+    // scale:0,
+    opacity:0,
+    duration:0.5,
+    // transformBox:'fill-box',
+    stagger:0.4,
+    delay:0.2
+
+
+  })
+
+   gsap.from('g.mintemp circle ',{
+    // scale:0,
+    opacity:0,
+    duration:0.5,
+    // transformBox:'fill-box',
+    stagger:0.4,
+    delay:0.2
+
+  })
+
+    gsap.from('g.maxtemp text',{
+    // scale:0,
+    opacity:0,
+    duration:0.5,
+    // transformBox:'fill-box',
+    stagger:0.4,
+    delay:1
+
+
+  })
+
+
+    gsap.from('g.mintemp text',{
+    // scale:0,
+    opacity:0,
+    duration:0.5,
+    // transformBox:'fill-box',
+    stagger:0.4,
+    delay:1
+    
+
+
+  })
 
   // coloring the today points
 
@@ -219,15 +278,33 @@ function display(result){
 
   var condition = document.querySelector('div.condition');
   condition.querySelector('p').innerHTML = `${todayForecast['avgtemp_c']}ْ C`;
+
   condition.querySelector('img').src = `https:${todayForecast.condition.icon}`;
 
-  condition.querySelector('span.text').innerHTML = `${todayForecast.condition.text}`
+  condition.querySelector('span.text').innerHTML = `${todayForecast.condition.text}`;
+
+
+
+  var number = {value:0}
+  gsap.to(number,{
+    value:todayForecast['avgtemp_c'],
+    duration:0.5,
+    ease:'power1.out',
+    onUpdate:()=>{
+
+      condition.querySelector('p').innerHTML = `${ Math.round(number.value*10)/10 }ْ C`;
+
+    }
+  })
   
 
   
 // display all data over the hours
 
-createTimes(result.forecast.forecastday.at(DAY).hour,result.forecast.forecastday.at(DAY).astro)
+createTimes(result.forecast.forecastday.at(DAY).hour,result.forecast.forecastday.at(DAY).astro);
+
+  // changeBackground()
+
 
 
 }
@@ -236,13 +313,22 @@ createTimes(result.forecast.forecastday.at(DAY).hour,result.forecast.forecastday
 
 
 
+// function animationNumbers(value){
+//   var number ={value:0}
+//   gsap.to(number,{
+//     value:value,
+//     duration:1,
+//     ease:'power1.out',
+//     onUpdate:()=>{
+
+//     }
+//   })
 
 
 
+function getWeatherData(){
 
-function getFutureWeather(){
-
-  var API = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${City}&days=${14}&aqi=no`
+  var API = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${City}&days=${7}&aqi=no`
 
 
   var newPromes = new Promise((resolve,reject)=>{
@@ -290,13 +376,13 @@ window.addEventListener('resize',()=>{
 
 
  document.querySelector('div.next-day-btn>i.fa-arrow-circle-right').addEventListener('click',(e)=>{
-      DAY = ++DAY >=14 ? 0:DAY;
+      DAY = ++DAY >=7 ? 0:DAY;
       display(weatherData);
       nextDayPoints()
 
     });
 document.querySelector('div.next-day-btn>i.fa-arrow-circle-left').addEventListener('click',(e)=>{
-      DAY = --DAY < 0 ? 13:DAY;
+      DAY = --DAY < 0 ? 6:DAY;
       display(weatherData);
       previoustDayPoints()
 
@@ -407,7 +493,8 @@ function previoustDayPoints(){
 
 
 }
-// getFutureWeather(2)
+// getWeatherData
+//(2)
 
 
 function createRotary(){
@@ -527,7 +614,7 @@ function createTimes(allHoursData,astro){
 
    
 
-
+    console.log(allHoursData[i])
 
     var divIamge= document.createElement('div');
     divIamge.classList.add('img')
@@ -607,10 +694,51 @@ ulList.addEventListener('click',function(eve){
 
   console.log(eve.target.innerText);
   City = eve.target.innerText
-  getFutureWeather()
+  getWeatherData()
   
   ulList.innerHTML = ""
   searchInput.value = ""
 })
 
 // -----------
+
+
+// change background according to the city 
+
+async function changeBackground(){
+
+  console.log(weatherData.forecast.forecastday[DAY].day.condition.text)
+
+  var request = await fetch(`https://api.pexels.com/v1/search?query=${weatherData.forecast.forecastday[DAY].day.condition.text} weather &per_page=4`,{
+    headers:{
+      Authorization:'563492ad6f91700001000001cd5b824ebbbd4944ba1e8e3ae5465024'
+    }
+  })
+
+  var result = await request.json()
+  var bg = document.querySelector('div.bg')
+  if(window.width > 450){
+        bgy.style.cssText = `
+    background:
+    url('${result.photos[1].src.landscape}') center / cover no-repeat ,
+    linear-gradient(#4facfe, #00f2fe) center / contain 
+    ;
+    `
+  }else{
+        bg.style.cssText = `
+    background:
+    url('${result.photos[1].src.portrait}') center / cover no-repeat ,
+    linear-gradient(#4facfe, #00f2fe) center / contain 
+    ;
+    `
+  }
+
+
+
+  console.log(result.photos[0].src.landscape)
+  console.log(result.photos[0].src.portrait)
+  console.log(result)
+
+}
+
+changeBackground()

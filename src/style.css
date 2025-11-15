@@ -25,7 +25,7 @@ li{list-style: none;}
 body{
  
   /* min-height: 100vh; */
-    background:linear-gradient(#0000004f, #000000a2) center /cover, black  url('/images/rain1.jpg') center / cover no-repeat  ;
+    background:linear-gradient(#000000b4, #0000009f) center /cover, black  url('/images/rain1.jpg') center / cover no-repeat  ;
     /* min-height: 100vh; */
 
     color: var(--text-color) !important;
@@ -190,14 +190,15 @@ div.info i{
 /* start of days */
 svg {
   width: 100%;
-  min-width: 500px !important;
+  min-width: 300px !important;
   overflow-x: auto;
   position: relative;
 }
 svg circle{
-  transform-box: fill-box;
+  transform-box: fill-box !important;
   transform-origin: center center;
   transition: transform 0.2s;
+ 
 }
 svg  circle:hover{
   transform: scale(1.4);
@@ -209,7 +210,7 @@ div.next-days {
   border: var(--bg-color-transparent-white) solid 1px;
   background-color: var(--bg-color-transparent-white);
   border-radius: 8px;
-  height: 200px;
+  height: 100%;
 
   grid-column: 1/-1;
   padding: 0 !important;
@@ -320,8 +321,8 @@ div.times div.time.active{
   
     }
   div.next-days{
-    /* grid-column: 2/-1;
-    grid-row: 1/2; */
+    grid-column: 3/-1;
+    grid-row: 2/ 4;
     overflow-x: hidden;
   }
   div.location {
