@@ -667,10 +667,10 @@ function getWeatherData(){
 // search ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 var searchInput  = document.getElementById('search');
-var ulList = document.getElementById('listData')
+var ulList = document.getElementById('cities-list')
 
 searchInput.addEventListener('input',function(eve){
-  console.log(eve.target.value)
+  
 
   if(/ +/.test(eve.target.value) || eve.target.value.length == 0){
     console.log('there is a spces')
@@ -714,6 +714,11 @@ ulList.addEventListener('click',function(eve){
   ulList.innerHTML = ""
   searchInput.value = ""
 })
+document.body.addEventListener('click',(eve)=>{
+  ulList.innerHTML =''
+  
+})
+
 
 
 // subscribe button
@@ -779,37 +784,30 @@ document.getElementById('subscribe-btn').addEventListener('click',function(eve){
 
 document.querySelector('nav i').addEventListener('click',function(eve){
   
-  
-  gsap.to('nav:has(i.fa-bars) ul',{
-    duration:0.4,
-    scaleY:1,
-
-    
-  })
-
-  
-
-  gsap.to('nav:has(i.fa-close) ul',{
-    duration:0.4,
-    scaleY:0,
-    onComplete:()=>{
-      // document.querySelectorAll('nav ul li').forEach(ele=>ele.classList.add('opacity-0'))
-    }
-    
-  })
-
-  gsap.to('nav:has(i.fa-bars) ul li',{
-    duration:0.4,
-    opacity:1,
-    stagger:0.2
-    
-  })
-
-  
-
+  // console.log(this.closest('ul'))
+  document.querySelector('nav ul').classList.toggle('active');
 
   this.classList.toggle('fa-close')
   this.classList.toggle('fa-bars')
+})
+
+
+
+
+// nav links handler
+
+document.querySelector('nav ul li a[href="#contact"]').addEventListener('click',(eve)=>{
+  gsap.to('header',{
+    duration:0.4,
+    scaleX:0
+  })
+})
+
+document.querySelector('a[href="#home"]').addEventListener('click',(eve)=>{
+  gsap.to('header',{
+    duration:0.4,
+    scaleX:1
+  })
 })
 
 

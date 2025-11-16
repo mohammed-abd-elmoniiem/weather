@@ -17,22 +17,36 @@
   <body>
     <nav
       id="nav"
-      class="d-flex justify-content-between container-md align-items-center"
+      class="d-flex justify-content-between container-md align-items-center rounded-2"
     >
       <h1>weather</h1>
 
       <i class="fa fa-bars"></i>
       <ul class="d-flex">
-        <li><a href="#">home</a></li>
+        <li><a href="#home">home</a></li>
         <li><a href="#">news</a></li>
         <li><a href="#">live cameras</a></li>
         <li><a href="#">photos</a></li>
-        <li><a href="#">conatct</a></li>
+        <li><a href="#contact">conatct</a></li>
       </ul>
     </nav>
 
-    <header class="">
-      <div class="card1 py-2 px-3 pt-1 gap-2 container-md">
+    <header class="p-1">
+      <div class="card1 px-3 py-3 gap-2 container-md rounded-3">
+        <div class="find border-0 position-relative">
+          <input
+            class="border-0"
+            placeholder="find city"
+            type="search"
+            name="city"
+            id="search"
+          />
+
+          <!-- <div class="layer"></div> -->
+
+          <ul id="cities-list" class="position-absolute"></ul>
+        </div>
+
         <div
           class="location info position-relative d-flex flex-column align-items-start justify-content-between w-100"
         >
@@ -41,20 +55,6 @@
           <div class="time d-flex gap-3">
             <p id="date">12/12/1254</p>
             <p id="day">day</p>
-          </div>
-
-          <div
-            class="find form-control w-auto p-0 bg-transparent border-0 position-relative"
-          >
-            <input
-              class="border-0"
-              placeholder="find city"
-              type="search"
-              name="city"
-              id="search"
-            />
-
-            <ul id="listData" class="position-absolute"></ul>
           </div>
         </div>
 
@@ -122,6 +122,8 @@
         <div class="rotary"></div>
       </div>
     </header>
+
+    <section class="contact" id="contact"></section>
 
     <footer class="container-md py-3 text-center">
       <div class="inner-footer container-fluid">

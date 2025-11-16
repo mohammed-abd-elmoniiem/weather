@@ -32,6 +32,7 @@ p,h4,h1,h2,h3{
 }
 
 li{list-style: none;}
+
 body{
  
   /* min-height: 100vh; */
@@ -48,6 +49,10 @@ body{
    
 }
 
+h1{
+  text-transform: capitalize;
+  font-weight: 400;
+}
 nav{
   
     background: var(--bg-color-transparent);
@@ -55,22 +60,28 @@ nav{
     justify-self: flex-start !important;
     height: 50px;
     position: relative;
+    margin-top: 5px;
+    margin-bottom: 15px;
 
   
    
   }
 
-
+nav i {
+  font-size: 25px;
+}
 
 /* nav menu */
 nav ul{
   
+  
   display: flex;
   flex-direction: column;
+  gap: 8px;
   position: absolute;
   top: 100%;
-  left: 20px;
-  right: 20px;
+  left: 10px;
+  right: 10px;
   background-color: var(--bg-color-transparent-white);
   backdrop-filter: blur(15px);
   z-index: 50;
@@ -78,17 +89,26 @@ nav ul{
   transform-origin: top center;
   padding: 5px;
   border-radius: 8px;
+  margin: 0;
+}
+
+.active {
+  transform: scaleY(1) !important;
 }
 nav ul li{
-  opacity: 0;
+
+
   text-align: center;
 }
 
 nav ul li a{
   color: var(--text-color) !important;
+  font-weight: 300;
+  text-transform: capitalize;
 }
 
 
+/* end of the nav */
 
 
 
@@ -96,45 +116,6 @@ nav ul li a{
 
 
 
-
-
-div.form-control{
-  box-shadow: none !important;
-  color: var(--text-color) !important;
- 
-}
-input[type='search']{
-  background-color: var(--bg-color-transparent-white);
-  color: var(--text-color) !important;
-  padding: 4px; border-radius: 5px;
-}
-input[type='search']::placeholder{
-  color: var(--text-color) !important;
-
-}
-input[type='search']:focus{
-  box-shadow: none !important;
-  border: none !important;
-}
-
-#listData{
-  top: 32px;
-  left: 0;
-  width: 100%;
-  z-index: 5;
-  background-color: var(--bg-dark);
-  
-  
-  border-radius: 8px;
-  padding: 0;
-
-}
-li{
-  padding: 5px;
-}
-li:hover{
-  background-color: var(--bg-color-transparent-white);
-}
 
 /* end of the nav */
 
@@ -155,6 +136,63 @@ div.card1{
     /* grid-template-rows: repeat(3,200px); */
    
   }
+
+  div.find{
+    grid-column: 1/-1;
+  }
+
+
+div.find {
+  box-shadow: none !important;
+  color: var(--text-color) !important;
+  width:100% ;
+  margin: 0;
+
+}
+
+input[type='search'] {
+  background-color: var(--bg-color-transparent-white);
+  color: var(--text-color) !important;
+  width: 100%;
+  padding: 4px;
+  border-radius: 5px;
+}
+
+input[type='search']::placeholder {
+  color: var(--text-color) !important;
+
+}
+
+input[type='search']:focus {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+
+
+ul#cities-list {
+  top: 32px;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+  background-color: var(--bg-color-transparent);
+  backdrop-filter: blur(75px);
+  border: 1px solid var(--bg-color-transparent-white);
+
+
+  border-radius: 8px;
+  padding: 0;
+ 
+
+}
+
+ul#cities-list li {
+  padding: 5px;
+}
+
+ul#cities-list li:hover {
+  background-color: var(--bg-color-transparent-white);
+}
 
   
 div.location{
@@ -442,13 +480,12 @@ footer div.copyright strong{
  
       transform: none;
     
-      padding: 5px;
-      border-radius: 8px;
+   
     }
   
     nav ul li {
       opacity: 1 !important;
-      text-align: center;
+    
     }
   
   
