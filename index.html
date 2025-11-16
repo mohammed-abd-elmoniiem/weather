@@ -21,19 +21,14 @@
     >
       <h1>weather</h1>
 
-      <div
-        class="find form-control w-auto p-0 bg-transparent border-0 position-relative"
-      >
-        <input
-          class="border-0"
-          placeholder="find city"
-          type="search"
-          name="city"
-          id="search"
-        />
-
-        <ul id="listData" class="position-absolute"></ul>
-      </div>
+      <i class="fa fa-bars"></i>
+      <ul class="d-flex">
+        <li><a href="#">home</a></li>
+        <li><a href="#">news</a></li>
+        <li><a href="#">live cameras</a></li>
+        <li><a href="#">photos</a></li>
+        <li><a href="#">conatct</a></li>
+      </ul>
     </nav>
 
     <header class="">
@@ -46,6 +41,20 @@
           <div class="time d-flex gap-3">
             <p id="date">12/12/1254</p>
             <p id="day">day</p>
+          </div>
+
+          <div
+            class="find form-control w-auto p-0 bg-transparent border-0 position-relative"
+          >
+            <input
+              class="border-0"
+              placeholder="find city"
+              type="search"
+              name="city"
+              id="search"
+            />
+
+            <ul id="listData" class="position-absolute"></ul>
           </div>
         </div>
 
@@ -86,7 +95,7 @@
             <span>humidity</span>
           </div>
 
-          <p>${value}</p>
+          <p>0</p>
         </div>
 
         <div class="info avg-uv">
@@ -109,54 +118,50 @@
         </div>
 
         <div class="times position-relative"></div>
-        <!-- 
-          <div class="temp">
-            <h3 id="temp">32</h3>
-            <div class="d-flex align-items-center">
-              <img src="" id="icon" alt="icon " />
-              <p id="description-text">sunny</p>
-            </div>
-          </div>
-
-          <div class="wind info">
-            <div class="d-flex gap-2 align-items-center">
-              <i class="fa fa-wind"></i>
-              <h4 class="">wind</h4>
-            </div>
-
-            <p id="wind">30 rph</p>
-          </div> -->
-        <!-- 
-          <div class="humidity info">
-            <div class="d-flex gap-2 align-items-center">
-              <i class="fa-solid fa-droplet"></i>
-              <h4 class="">humidity</h4>
-            </div>
-
-            <p id="humidity">64</p>
-          </div>
-
-          <div class="pressure info">
-            <div class="d-flex gap-2 align-items-center">
-              <i class="fa-solid fa-circle-dot"></i>
-              <h4 class="">pressure</h4>
-            </div>
-
-            <p id="pressure">64</p>
-          </div>
-
-          <div class="uv info">
-            <div class="d-flex gap-2 align-items-center">
-              <i class="fa-solid fa-sun"></i>
-              <h4 class="">UV Index</h4>
-            </div>
-
-            <p id="uv">64</p>
-          </div> -->
 
         <div class="rotary"></div>
       </div>
     </header>
+
+    <footer class="container-md py-3 text-center">
+      <div class="inner-footer container-fluid">
+        <div class="subscribe position-relative">
+          <input
+            class="w-100"
+            type="email"
+            placeholder="enter your email to subscribe"
+            name="email"
+            id="email"
+          />
+          <button id="subscribe-btn" class="border-0 position-absolute">
+            subscribe
+          </button>
+        </div>
+
+        <div class="social d-flex gap-2 justify-content-center my-4">
+          <a href="https://www.facebook.com" target="_blank">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="https://www.googleplus.com" target="_blank">
+            <i class="fa-brands fa-google-plus-g"></i>
+          </a>
+          <a href="https://www.twitter.com" target="_blank">
+            <i class="fa-brands fa-twitter"></i>
+          </a>
+          <a href="https://www.pintrest.com" target="_blank">
+            <i class="fa-brands fa-pinterest-p"></i>
+          </a>
+        </div>
+
+        <div class="copyright text-center text-capitalize">
+          <strong>
+            copyright 2025 route academy.<br />
+            designed by mohamed abd elmoniem.<br />
+            all rights reserved
+          </strong>
+        </div>
+      </div>
+    </footer>
 
     <script type="module" src="/src/main.js"></script>
   </body>

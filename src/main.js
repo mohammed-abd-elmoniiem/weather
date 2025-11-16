@@ -715,7 +715,102 @@ ulList.addEventListener('click',function(eve){
   searchInput.value = ""
 })
 
+
+// subscribe button
+
+
+document.getElementById('subscribe-btn').addEventListener('click',function(eve){
+  
+  console.log(this)
+  const banner = document.createElement('p')
+  banner.classList.add('position-absolute','text-center','banner')
+  const emailInput = document.querySelector('footer input')
+  console.log(emailInput.value)
+  if(/^[a-zA-Z][a-zA-Z0-9\._]*@[a-zA-Z][a-zA-Z0-9\._]*(\.[a-zA-Z][a-zA-Z0-9]*)+/i.test(emailInput.value)){
+    console.log(true)
+
+    emailInput.value = null
+    banner.classList.add('valid')
+    banner.innerHTML = 'subscribed successfully' 
+    
+
+    emailInput.after(banner)
+
+    const timeId = setTimeout(() => {
+      gsap.to(banner,{
+        duration:1,
+        opacity:0,
+        onComplete:()=>{
+          banner.remove();
+          clearTimeout(timeId)
+        }
+      })
+      
+    }, 1000);
+
+  }else{
+    console.log(false)
+    banner.classList.add('invalid')
+
+
+    banner.innerHTML = 'invaild email' 
+    
+    emailInput.after(banner)
+
+    const timeId = setTimeout(() => {
+      gsap.to(banner,{
+        duration:1,
+        opacity:0,
+        onComplete:()=>{
+          banner.remove();
+          clearTimeout(timeId)
+        }
+      })
+      
+    }, 1000);
+  }
+
+})
 // -----------
+
+
+
+// nav menu
+
+document.querySelector('nav i').addEventListener('click',function(eve){
+  
+  
+  gsap.to('nav:has(i.fa-bars) ul',{
+    duration:0.4,
+    scaleY:1,
+
+    
+  })
+
+  
+
+  gsap.to('nav:has(i.fa-close) ul',{
+    duration:0.4,
+    scaleY:0,
+    onComplete:()=>{
+      // document.querySelectorAll('nav ul li').forEach(ele=>ele.classList.add('opacity-0'))
+    }
+    
+  })
+
+  gsap.to('nav:has(i.fa-bars) ul li',{
+    duration:0.4,
+    opacity:1,
+    stagger:0.2
+    
+  })
+
+  
+
+
+  this.classList.toggle('fa-close')
+  this.classList.toggle('fa-bars')
+})
 
 
 // change background according to the city 

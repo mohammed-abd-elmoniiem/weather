@@ -6,6 +6,8 @@
   --text-color:#f8f8f8;
   --bg-dark:#222222;
 
+  --main-color:#cc9c00;
+
   --text-color2:#888888;
 
 
@@ -18,6 +20,11 @@
 }
 *{
   /* border: 0.5px red solid; */
+}
+
+a{
+  text-decoration: none;
+  display: block;
 }
 
 p,h4,h1,h2,h3{
@@ -47,10 +54,47 @@ nav{
   /* background-color: var(--bg-dark) !important; */
     justify-self: flex-start !important;
     height: 50px;
+    position: relative;
 
   
    
   }
+
+
+
+/* nav menu */
+nav ul{
+  
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 20px;
+  right: 20px;
+  background-color: var(--bg-color-transparent-white);
+  backdrop-filter: blur(15px);
+  z-index: 50;
+  transform: scaleY(0);
+  transform-origin: top center;
+  padding: 5px;
+  border-radius: 8px;
+}
+nav ul li{
+  opacity: 0;
+  text-align: center;
+}
+
+nav ul li a{
+  color: var(--text-color) !important;
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -307,16 +351,109 @@ div.times div.time.active{
       width: 100%;
     }
 
-div.times div.time.active{
+
+    /* start of the footer*/
+input:focus{
+  outline:  none !important;
+}
+
+footer div.inner-footer{
+  max-width: 600px;
+}
+footer div.subscribe input{
+  background: var(--bg-color-transparent-white) !important;
+  color: var(--text-color);
+  border: none;
+  padding: 8px 4px;
+  padding-left: 40px;
+  border-radius: 25px;
+}
+
+footer div.subscribe button{
+  height: 90%;
+  background: var(--bg-dark);
+  top: 5%;
+  right: 3px;
+  border-radius: 25px;
+  padding: 0px 30px;
+  color: var(--text-colort);
  
+}
+footer div.social a{
+  padding: 4px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px; 
+   background-color: var(--bg-color-transparent-white);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+footer div.social i{
+  font-size: 20px;
  
+  color: var(--text-color);
+
+}
+
+footer div.copyright{
   
 }
- div.times div.time.active div.img {
+footer div.copyright strong{
+  font-size: 15px !important;
+  font-weight: 300;
+  color: var(--text-color);
+}
 
- }
+.banner{
+  font-size: 13px;
+  /* border: red 1px solid; */
+  left: 50%;
+  transform: translateX(-50%);
+}
+.invalid{
+  color: red;
+}
+.valid{
+  color: rgb(0, 109, 0);
+}
+
+
+
+
+
+/* start of the media query */
 
  @media  screen and (min-width:762px) {
+
+  /* nav  */
+  nav i.fa{
+    display: none;
+  }
+
+  nav ul {
+  
+      display: flex;
+      flex-direction: row;
+      position: static !important;
+      
+      background-color: transparent;
+      backdrop-filter: blur(15px);
+ 
+      transform: none;
+    
+      padding: 5px;
+      border-radius: 8px;
+    }
+  
+    nav ul li {
+      opacity: 1 !important;
+      text-align: center;
+    }
+  
+  
+
+  /* end of the nav */
 
   div.card1 {
       
