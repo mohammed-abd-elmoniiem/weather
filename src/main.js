@@ -797,17 +797,24 @@ document.querySelector('nav i').addEventListener('click',function(eve){
 // nav links handler
 
 document.querySelector('nav ul li a[href="#contact"]').addEventListener('click',(eve)=>{
-  gsap.to('header',{
-    duration:0.4,
-    scaleX:0
-  })
+ 
+  document.querySelector('header').classList.add('d-none');
+  document.querySelector('header').classList.remove('d-block');
+
+  document.querySelector('section.contact').classList.add('d-flex');
+  document.querySelector('section.contact').classList.remove('d-none');
+
 })
 
 document.querySelector('a[href="#home"]').addEventListener('click',(eve)=>{
-  gsap.to('header',{
-    duration:0.4,
-    scaleX:1
-  })
+
+  document.querySelector('header').classList.add('d-block');
+  document.querySelector('header').classList.remove('d-none');
+
+  document.querySelector('section.contact').classList.add('d-none');
+  document.querySelector('section.contact').classList.remove('d-flex');
+
+  
 })
 
 

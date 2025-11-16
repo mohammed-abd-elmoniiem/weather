@@ -1,5 +1,9 @@
 
-
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 :root{
   --bg-color-transparent:#0000009d;
   --bg-color-transparent-white:#ffffff11;
@@ -17,11 +21,18 @@
   font-family: "Raleway", sans-serif !important;
     /* font-family: "Open Sans", sans-serif; */
 
+  scroll-padding-top: 60px;
+
 }
 *{
   /* border: 0.5px red solid; */
 }
 
+
+::placeholder{
+  text-transform: capitalize;
+  font-size: 15px;
+}
 a{
   text-decoration: none;
   display: block;
@@ -62,6 +73,10 @@ nav{
     position: relative;
     margin-top: 5px;
     margin-bottom: 15px;
+    position: sticky;
+    top: 2px;
+    z-index: 60 ;
+    /* backdrop-filter: blur(15px); */
 
   
    
@@ -77,13 +92,13 @@ nav ul{
   
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 18px;
   position: absolute;
   top: 100%;
-  left: 10px;
-  right: 10px;
-  background-color: var(--bg-color-transparent-white);
-  backdrop-filter: blur(15px);
+  left: 1px;
+  right: 0px;
+  background-color: var(--bg-color-transparent);
+  backdrop-filter: blur(5px);
   z-index: 50;
   transform: scaleY(0);
   transform-origin: top center;
@@ -99,6 +114,7 @@ nav ul li{
 
 
   text-align: center;
+  font-size: 15px;
 }
 
 nav ul li a{
@@ -177,7 +193,7 @@ ul#cities-list {
   z-index: 5;
   background-color: var(--bg-color-transparent);
   backdrop-filter: blur(75px);
-  border: 1px solid var(--bg-color-transparent-white);
+  /* border: 1px solid var(--bg-color-transparent-white); */
 
 
   border-radius: 8px;
@@ -207,7 +223,7 @@ div.times{
   grid-column: 1/-1;
 }
 div.location>p:first-of-type{
-      font-size: 55px;
+      font-size: 35px;
       font-weight: 400;
       text-transform: uppercase;
     }
@@ -388,7 +404,66 @@ div.times div.time.active{
     div.times div.time div.img img{
       width: 100%;
     }
+/* end of the header */
 
+/* start of contact section */
+
+section.contact{
+  /* background-color: var(--bg-color-transparent); */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* display: none; */
+}
+
+
+section.contact div.contact-us{
+  max-width: 600px;
+  margin: 30px 0;
+}
+
+section.contact div.contact-us h2{
+    font-weight: 300;
+    text-transform: capitalize;
+  
+}
+
+section.contact div.contact-us p{
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+section.contact div.contact-info{
+  max-width: 600px;
+  justify-content: center;
+}
+
+section.contact div.contact-info textarea{
+    width: 100%;
+    background: var(--bg-color-transparent-white) !important;
+      color: var(--text-color);
+      border: none;
+      padding: 8px 4px;
+      padding-left: 40px;
+      border-radius: 25px;
+      border: transparent 1px solid;  
+      outline: none;
+}
+
+section.contact div.contact-info textarea:focus{
+  border: var(--main-color) 1px solid;
+
+}
+section.contact div.contact-info button{
+  border: none;
+  font-size: 18px;
+  color: var(--text-color);
+  background-color: var(--bg-color-transparent-white);
+  padding: 5px 20px;
+  border-radius: 18px;
+}
+
+/* end contact section */
 
     /* start of the footer*/
 input:focus{
@@ -398,13 +473,21 @@ input:focus{
 footer div.inner-footer{
   max-width: 600px;
 }
-footer div.subscribe input{
+footer div.subscribe input,
+section input{
   background: var(--bg-color-transparent-white) !important;
   color: var(--text-color);
   border: none;
   padding: 8px 4px;
   padding-left: 40px;
   border-radius: 25px;
+  border: transparent 1px solid;
+  
+}
+
+footer div.subscribe input:focus ,
+section input:focus{
+  border: var(--main-color) 1px solid;
 }
 
 footer div.subscribe button{
@@ -475,8 +558,8 @@ footer div.copyright strong{
       flex-direction: row;
       position: static !important;
       
-      background-color: transparent;
-      backdrop-filter: blur(15px);
+      background-color: transparent !important;
+      /* backdrop-filter: blur(15px); */
  
       transform: none;
     
@@ -498,18 +581,24 @@ footer div.copyright strong{
       /* grid-template-rows: repeat(3,200px); */
   
     }
+  div.location {
+
+    grid-column: 1/3;
+  }
+  div.find{
+    grid-row: 1/2;
+    grid-column: 3/-1;
+  }
   div.next-days{
-    grid-column: 1/-1;
+    grid-column: 3/-1;
     grid-row: 2/ 3;
     overflow-x: hidden;
   }
-  div.location {
-      grid-column: 1/3;
-    }
+ 
   
     div.condition {
-      grid-column: 3/-1;
-      grid-row: 1/2;
+      grid-column: 1/3;
+      grid-row: 2/3;
 
       
           display: flex;
