@@ -19,9 +19,9 @@
 
  
   font-family: "Raleway", sans-serif !important;
-    /* font-family: "Open Sans", sans-serif; */
+    font-family: "Open Sans", sans-serif;
 
-  scroll-padding-top: 60px;
+  scroll-padding-top: 55px;
 
 }
 *{
@@ -44,6 +44,19 @@ p,h4,h1,h2,h3{
 
 li{list-style: none;}
 
+/* body::after{
+  content: '';
+
+  width: 200px;
+  height: 200px;
+  background: var(--main-color);
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  border-radius: 100%;
+  z-index: -555;
+} */
+
 body{
  
   /* min-height: 100vh; */
@@ -54,6 +67,7 @@ body{
     text-shadow:var(--text-shadow);
 
     transition: background 0.5s;
+    /* backdrop-filter: blur(10px); */
     min-height: 100vh;
 
    
@@ -414,6 +428,8 @@ section.contact{
   flex-direction: column;
   align-items: center;
   /* display: none; */
+
+  background: var(--bg-color-transparent);
 }
 
 
