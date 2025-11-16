@@ -495,7 +495,7 @@ section input{
   color: var(--text-color);
   border: none;
   padding: 8px 4px;
-  padding-left: 40px;
+  padding-left: 10px;
   border-radius: 25px;
   border: transparent 1px solid;
   
@@ -505,6 +505,9 @@ footer div.subscribe input:focus ,
 section input:focus{
   border: var(--main-color) 1px solid;
 }
+footer div.subscribe input::placeholder{
+  padding-left: 5px;
+}
 
 footer div.subscribe button{
   height: 90%;
@@ -512,7 +515,7 @@ footer div.subscribe button{
   top: 5%;
   right: 3px;
   border-radius: 25px;
-  padding: 0px 30px;
+  padding: 0px 12px;
   color: var(--text-colort);
  
 }

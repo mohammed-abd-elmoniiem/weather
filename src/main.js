@@ -796,6 +796,13 @@ document.querySelector('nav i').addEventListener('click',function(eve){
 
 // nav links handler
 
+document.querySelector('nav ul').addEventListener('click',(eve)=>{
+   document.querySelector('nav ul').classList.toggle('active');
+
+  document.querySelector('nav i').classList.remove('fa-close')
+  document.querySelector('nav i').classList.add('fa-bars')
+})
+
 document.querySelector('nav ul li a[href="#contact"]').addEventListener('click',(eve)=>{
  
   document.querySelector('header').classList.add('d-none');
