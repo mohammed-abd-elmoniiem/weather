@@ -535,6 +535,8 @@ function createTimes(allHoursData,astro){
   var sunrise = +astro.sunrise.match(/^\d{2}(?=:)/i)[0];
   var sunset = +astro.sunset.match(/^\d{2}(?=:)/i)[0]+12;
 
+  console.log(sunrise,sunset)
+
 
   
 
@@ -556,7 +558,7 @@ function createTimes(allHoursData,astro){
     if(i< sunrise ){
        time.style.background = 'var(--bg-color-transparent)'
     }else if(i == sunrise){
-      time.setAttribute('sun',`sunrise  ${astro.sunrise}`)
+      time.setAttribute('sun',`sunrise  ${astro.sunrise}`);
       time.classList.add('sun-change','position-relative')
       time.style.background = `linear-gradient(90deg,var(--bg-color-transparent)  ,var(--bg-color-transparent-white) )`
 
@@ -608,9 +610,15 @@ function createTimes(allHoursData,astro){
 
 gsap.from('div.times div.time',{
   duration:0.5,
-  stagger:0.1,
-  y:200,
-  x:200
+  opacity:0,
+  scale:0,
+  
+  stagger:{
+    each:0.05,
+    from:'center'
+  },
+  // y:200,
+  // x:200
 })
 
 }
