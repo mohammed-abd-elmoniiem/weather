@@ -8,22 +8,182 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import './style.css'
 import gsap from 'gsap';
 
-var City = 'cairo'
-var DAY = 0;
+var City = 'cairo'                                 // default city
+var DAY = 0;                                       //current day index.
 const API_KEY = "48ef6540816a43269e0172236251111";
-var weatherData = null;
+var weatherData = null;                            // globl variable contain all data of the city
 
 
 
 // initail 
-// getWeatherData() 
 
-getWeatherData()
-
-
+// get weather data of the default city(cairo) and display it
+getWeatherData() 
 
 
 
+// fetch weather data++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+function getWeatherData(){
+
+  var API = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${City}&days=${7}&aqi=no`; // limiting data to 7 days only.
+
+
+  var newPromes = new Promise((resolve,reject)=>{
+
+
+    var request = new XMLHttpRequest();
+    request.open('GET',API);
+    request.send();
+
+    request.addEventListener('load',(eve)=>{
+      // console.log(request.response)
+      resolve( JSON.parse(request.response) )
+    })
+
+    request.addEventListener('error',eve=>reject())
+
+
+  })
+
+  newPromes.then(result=>{
+    weatherData = result; //assign to global variable.
+    display(result);         //display the data of the current day.
+    next14dDay(result['forecast']['forecastday']); //draaw svg graph .
+  
+  })
+
+
+}
+
+// ------------------------------------------------------- end of fetching data
+
+
+// search ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+var searchInput  = document.getElementById('search');
+var ulList = document.getElementById('cities-list'); // ul will diplay available city with charcters that were entered
+
+searchInput.addEventListener('input',function(eve){
+  
+
+  if(/ +/.test(eve.target.value) || eve.target.value.length == 0){
+    console.log('there is a spces')
+    ulList.innerHTML = ""
+  }else{
+    searchCity(eve.target.value)
+  }
+  
+})
+
+function searchCity(q){
+  var request = new XMLHttpRequest();
+  request.open('GET',`https://api.weatherapi.com/v1/search.json?key=${API_KEY}&q=${q}&aqi=no`)
+  request.send();
+
+  request.addEventListener('readystatechange',(eve)=>{
+    if(request.readyState == 4){
+
+      var result = JSON.parse(request.response);
+     
+      var str = ``
+
+      for(var i = 0 ; i <result.length ; i++ ){
+
+        str+=`
+        <li> ${result[i].name} </li>`
+
+      }
+      ulList.innerHTML = str;
+    }
+  })
+}
+
+// on choose a city fetching its data and display it from 'getWeatherData function' after reset search parameters to null
+ulList.addEventListener('click',function(eve){
+
+  City = eve.target.innerText;
+
+  getWeatherData()
+  
+  ulList.innerHTML = null;
+  searchInput.value = null;
+})
+
+// when click on anywhere out of ul containg city will reset search parameters to initial
+document.body.addEventListener('click',(eve)=>{
+  ulList.innerHTML =''
+  
+})
+
+
+
+
+// subscribe button on footer seaction
+document.getElementById('subscribe-btn').addEventListener('click',function(eve){
+  
+  const banner = document.createElement('p');
+  banner.classList.add('position-absolute','text-center','banner');
+
+  const emailInput = document.querySelector('footer input')
+  
+
+  if(/^[a-zA-Z][a-zA-Z0-9\._]*@[a-zA-Z][a-zA-Z0-9\._]*(\.[a-zA-Z][a-zA-Z0-9]*)+/i.test(emailInput.value)){
+    
+    emailInput.value = null
+    banner.classList.add('valid')
+    banner.innerHTML = 'subscribed successfully' 
+    
+
+    emailInput.after(banner);
+
+    const timeId = setTimeout(() => {
+      gsap.to(banner,{
+        duration:1,
+        opacity:0,
+        onComplete:()=>{
+          banner.remove();
+          clearTimeout(timeId)
+        }
+      })
+      
+    }, 1000);
+
+  }else{
+    
+    banner.classList.add('invalid')
+
+
+    banner.innerHTML = 'invaild email' 
+    
+    emailInput.after(banner)
+
+    const timeId = setTimeout(() => {
+      gsap.to(banner,{
+        duration:1,
+        opacity:0,
+        onComplete:()=>{
+          banner.remove();
+          clearTimeout(timeId)
+        }
+      })
+      
+    }, 1000);
+  }
+
+})
+// -----------
+
+
+
+
+
+// end of the search section ------------------------------------------------------
+
+
+
+
+// display data+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 function display(result){
 
@@ -33,19 +193,15 @@ function display(result){
 
   var date = new Date(`${ result['forecast']['forecastday'].at(DAY).date}`);
   
-
   document.getElementById('city').innerText = result['location'].name;
 
   document.getElementById('day').innerText = date.toLocaleDateString('en-US',{weekday:'long'});
 
-  
-  
-  
   document.getElementById('date').innerText =`${date.getDate() }  ${date.toLocaleDateString('en-US',{month:'long'})}`;
 
  
 
-  // overview about wearher over all day
+  // overview about weather over all day
 
   document.querySelector('div.avg-temp>p').innerHTML = `${todayForecast['maxtemp_c']}/${todayForecast['mintemp_c']}  C`;
 
@@ -57,8 +213,9 @@ function display(result){
 
 
 
-
+  // update the data of the average condtion of the display day
   var condition = document.querySelector('div.condition');
+
   condition.querySelector('p').innerHTML = `${todayForecast['avgtemp_c']}ْ C`;
 
   condition.querySelector('img').src = `https:${todayForecast.condition.icon}`;
@@ -66,8 +223,8 @@ function display(result){
   condition.querySelector('span.text').innerHTML = `${todayForecast.condition.text}`;
 
 
-
-  var number = {value:0}
+  // animating the temperature dagree from 0 to its value
+  var number = {value:0};
   gsap.to(number,{
     value:todayForecast['avgtemp_c'],
     duration:0.5,
@@ -81,25 +238,17 @@ function display(result){
   
 
   
-// display all data over the hours
-
+// display all weather  data of each hour of the display day
 createTimes(result.forecast.forecastday.at(DAY).hour,result.forecast.forecastday.at(DAY).astro);
-
-  // changeBackground()
-
-
 
 }
 
 
 
 // draw svg graph for next 7 days  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// all function in the next part about drawing svg and animating it
 
 function next14dDay(forecastday ){
-
-
-
-
 
   var svg =document.querySelector('svg');
   
@@ -107,8 +256,6 @@ function next14dDay(forecastday ){
   var height = svg.getBoundingClientRect().height;
 
   
-
-
   var arrMax = [];
   var arrMaxPoints = [];
   var arrMAXdegree = [];
@@ -120,14 +267,9 @@ function next14dDay(forecastday ){
   var arrdate = []
   let arrVerticalLines =[]
 
-  
-
- 
-   var numberDays = 8
+  var numberDays = 8
 
 
-
-  
    var firstMaxPoint = [ (1/numberDays)*width , (height*0.7  - ( forecastday[0].day['maxtemp_c'] / 40)* height*0.4)];
    var firstMinPoint = [ (1/numberDays)*width , (height*0.7  - ( forecastday[0].day['mintemp_c'] / 40)* height*0.4)];
 
@@ -166,178 +308,137 @@ function next14dDay(forecastday ){
 
    var str2 = `
 
-   <path id='lines' d= "${ arrVerticalLines.join(' ')}" style="fill:none;stroke: #ffffffd2;stroke-width:0.1" />
+  <path id='lines' d= "${ arrVerticalLines.join(' ')}" style="fill:none;stroke: #ffffffd2;stroke-width:0.1" />
 
-  
-   
-  <path id="maxPath" d=" M${ firstMaxPoint[0]} ${ firstMaxPoint[1]}  ${arrMax.join(' ')} "
-  style="fill:none;stroke: #ffffffff;stroke-width:1.5" />
+  <path id="maxPath" d=" M${ firstMaxPoint[0]} ${ firstMaxPoint[1]}  ${arrMax.join(' ')} "  style="fill:none;stroke: #ffffffff;stroke-width:1.5" />
 
-   <g class="maxtemp" stroke="#ffffffff" stroke-width="1.5" fill="#000000">
-    ${arrMaxPoints.join(' ')}
-  </g>
+  <g class="maxtemp" stroke="#ffffffff" stroke-width="1.5" fill="#000000"> ${arrMaxPoints.join(' ')}  </g>
 
-  <g class="maxtemp" font-size="10" font-family="sans-serif" fill="white" text-anchor="middle">
-    ${arrMAXdegree.join(' ')}
-    
-  </g>
+  <g class="maxtemp" font-size="10" font-family="sans-serif" fill="white" text-anchor="middle"> ${arrMAXdegree.join(' ')}  </g>
 
-   <path id="minPath" d=" M${ firstMinPoint[0]} ${ firstMinPoint[1]}  ${arrMin.join(' ')} "
-  style="fill:none;stroke: #ffffffff;stroke-width:1.5" />
+  <path id="minPath" d=" M${ firstMinPoint[0]} ${ firstMinPoint[1]}  ${arrMin.join(' ')} " style="fill:none;stroke: #ffffffff;stroke-width:1.5" />
 
-   <g class="mintemp" stroke="#ffffffff" stroke-width="1.5" fill="#000000">
-    ${arrMinPoints.join(' ')}
-  </g>
+  <g class="mintemp" stroke="#ffffffff" stroke-width="1.5" fill="#000000"> ${arrMinPoints.join(' ')} </g>
 
-  <g  class="mintemp" font-size="10" font-family="sans-serif" fill="white" text-anchor="middle">
-    ${arrMindegree.join(' ')}
-    
-  </g>
-  <g font-size="11" font-family="sans-serif" fill="white" text-anchor="middle">
-    ${arrdate.join(' ')}
-    
-  </g>
+  <g  class="mintemp" font-size="10" font-family="sans-serif" fill="white" text-anchor="middle"> ${arrMindegree.join(' ')} </g>
 
-  
- 
+  <g font-size="11" font-family="sans-serif" fill="white" text-anchor="middle"> ${arrdate.join(' ')}  </g>
   
   `
 
   svg.innerHTML = str2
 
-  // animating path if it is the first time when creation
+  // animating path  when creation
  
+  // animating path of the max temperature (draw from 0 to 100%)
+  var maxPath = document.getElementById('maxPath');
+  var maxPathLenght = maxPath.getTotalLength();
 
-        var maxPath = document.getElementById('maxPath');
-        var maxPathLenght = maxPath.getTotalLength();
-        gsap.set(maxPath,{
-          strokeDasharray:maxPathLenght,
-          strokeDashoffset:maxPathLenght,
-          
-        });
-        gsap.to(maxPath,{
-          strokeDashoffset:0,
-          duration:2,
-          delay:0.4,
-          ease:'power1.out'
+  gsap.set(maxPath,{
+    strokeDasharray:maxPathLenght,
+    strokeDashoffset:maxPathLenght,
+    
+  });
+  gsap.to(maxPath,{
+    strokeDashoffset:0,
+    duration:2,
+    delay:0.4,
+    ease:'power1.out'
 
-        });
+  });
 
 
+  // animating path of the min temperature (draw from 0 to 100%)
+  
+  var minPath = document.getElementById('minPath');
+  var minPathLenght = minPath.getTotalLength();
+  gsap.set(minPath,{
+    strokeDasharray:minPathLenght,
+    strokeDashoffset:minPathLenght,
+    
+  });
+  gsap.to(minPath,{
+    strokeDashoffset:0,
+    duration:2,
+    delay:0.4,
+    ease:'power1.out'
+  });
 
-        var minPath = document.getElementById('minPath');
-        var minPathLenght = minPath.getTotalLength();
-        gsap.set(minPath,{
-          strokeDasharray:minPathLenght,
-          strokeDashoffset:minPathLenght,
-          
-        });
-        gsap.to(minPath,{
-          strokeDashoffset:0,
-          duration:2,
-          delay:0.4,
-          ease:'power1.out'
-        });
+  // animating the draw verical lines
+  var linesPath = document.getElementById('lines');
+  var linePathLenght = maxPath.getTotalLength();
 
-        // draw verical lines
-         var linesPath = document.getElementById('lines');
-        var linePathLenght = maxPath.getTotalLength();
-        gsap.set(linesPath,{
-          strokeDasharray:linePathLenght,
-          strokeDashoffset:linePathLenght,
-          
-        });
-        gsap.to(linesPath,{
-          strokeDashoffset:0,
-          duration:2,
-          delay:0,
-          ease:'power1.out',
-          stagger:0.2
+  gsap.set(linesPath,{
+    strokeDasharray:linePathLenght,
+    strokeDashoffset:linePathLenght,
+    
+  });
+  gsap.to(linesPath,{
+    strokeDashoffset:0,
+    duration:2,
+    delay:0,
+    ease:'power1.out',
+    stagger:0.2
 
-        });
+  });
+
+  // animating max circles 
+  gsap.from('g.maxtemp circle ',{
+    opacity:0,
+    duration:0.5,
+    stagger:0.2,
+    delay:0,
+    ease:'power1.out'
+
+  })
+
+  // animating min circles 
+  gsap.from('g.mintemp circle ',{
+    opacity:0,
+    duration:0.5,
+    stagger:0.2,
+    delay:0,
+    ease:'power1.out'
+
+  })
+
+  // animating max texts
+  gsap.from('g.maxtemp text',{
+    opacity:0,
+    duration:0.5,
+    stagger:0.4,
+    delay:1
+
+
+  })
+
+  // animating min texts
+
+  gsap.from('g.mintemp text',{
+    opacity:0,
+    duration:0.5,
+    stagger:0.4,
+    delay:1
+  })
+
 
         
-        gsap.from('g.maxtemp circle ',{
-          // scale:0,
-          opacity:0,
-          duration:0.5,
-          // transformBox:'fill-box',
-          stagger:0.2,
-          delay:0,
-          ease:'power1.out'
-
-          
-
-
-        })
-
-        gsap.from('g.mintemp circle ',{
-          // scale:0,
-          opacity:0,
-          duration:0.5,
-          // transformBox:'fill-box',
-          stagger:0.2,
-          delay:0,
-          ease:'power1.out'
-
-        })
-
-          gsap.from('g.maxtemp text',{
-          // scale:0,
-          opacity:0,
-          duration:0.5,
-          // transformBox:'fill-box',
-          stagger:0.4,
-          delay:1
-
-
-        })
-
-
-          gsap.from('g.mintemp text',{
-          // scale:0,
-          opacity:0,
-          duration:0.5,
-          // transformBox:'fill-box',
-          stagger:0.4,
-          delay:1
-          
-
-
-        })
-
-
-        // coloring the today points
 
   
-
+   // coloring the today points
   gsap.to('svg g.maxtemp circle.active',{
     duration:0.4,
-    
     r:5,
-    stroke:'red',
-    onComplete:function(){
-      // this._targets[0].classList.add('active')
-
-    }
+    stroke:'red'
   })
 
-  
-
-    gsap.to('svg g.mintemp circle.active',{
+  gsap.to('svg g.mintemp circle.active',{
     duration:0.4,
-  
     r:5,
-    stroke:'red',
-    onComplete:function(){
-      // this._targets[0].classList.add('active')
-   
-    }
+    stroke:'red'
   })
 
 
-
-  
 }
 
 
@@ -346,103 +447,95 @@ let prevoisWidth = window.innerWidth;
 
 window.addEventListener('resize',(e)=>{
 
-
     // display  predictions of the next 14 day
     if(window.innerWidth != prevoisWidth){
       next14dDay(weatherData['forecast']['forecastday']);
       prevoisWidth = window.innerWidth
     }
-    
-    
-    
-   
 })
 
-
- document.querySelector('div.next-day-btn>i.fa-arrow-circle-right').addEventListener('click',(e)=>{
+// event handler of the change to next day 
+document.querySelector('div.next-day-btn>i.fa-arrow-circle-right').addEventListener('click',(e)=>{
       DAY = ++DAY >=7 ? 0:DAY;
       display(weatherData);
-      nextDayPoints()
+      nextDayPoints();  //coloring the circle of that day on svg graph and make the previous point normal
 
-    });
+});
+
+// event handler of the change to previous day 
+
 document.querySelector('div.next-day-btn>i.fa-arrow-circle-left').addEventListener('click',(e)=>{
       DAY = --DAY < 0 ? 6:DAY;
       display(weatherData);
-      previoustDayPoints()
+      previoustDayPoints() //coloring the circle of that day on svg graph and make the previous point normal
 
-    });
+});
 
 
-
+// the function of changing the position of the colored circle on svg graph to the next circle with animation
 function nextDayPoints(){
 
+  // max temperature cirecle
   var currentPointMax = document.querySelector('svg g.maxtemp circle.active');
+
+  // return the current circle to normal size and color 
+  gsap.to(currentPointMax,{
+    duration:1,
+    delay:0,
+    r:3,
+    stroke:'white',
+    onStart:function(){
+      this._targets[0].classList.remove('active');
+    }
+  });
+
   
-
-
-    gsap.to(currentPointMax,{
-      duration:1,
-      delay:0,
-      r:3,
-      stroke:'white',
-      onStart:function(){
-        this._targets[0].classList.remove('active');
-
-
-  
-      }
-    })
-
+  // define the next circle (if reaching the end return to tthe first circle)
    var nextCircle = currentPointMax.nextElementSibling != undefined ? currentPointMax.nextElementSibling : document.querySelector('svg g.maxtemp circle:first-of-type');
 
-    gsap.to(nextCircle,{
-      duration:1,
-      delay:0,
-      r:5,
-      
-      stroke:'#fd0000ff',
-      onStart:function(){
-        this._targets[0].classList.add('active');
-      
-
-      }
-    })
+  // change the next cirecle to the active state
+  gsap.to(nextCircle,{
+    duration:1,
+    delay:0,
+    r:5,
+    stroke:'#fd0000ff',
+    onStart:function(){
+      this._targets[0].classList.add('active');
+    }
+  })
 
   
 
 
 
-  // min temp
+  // min temperature circle
   var currentPointMin = document.querySelector('svg g.mintemp circle.active');
   
 
+  // return the current circle to normal size and color 
+  gsap.to(currentPointMin,{
+    duration:1,
+    delay:0,
+    r:3,
+    stroke:'white',
+    onStart:function(){
+      this._targets[0].classList.remove('active');
+    }
+  });
 
-    gsap.to(currentPointMin,{
-      duration:1,
-      delay:0,
-      r:3,
-      stroke:'white',
-      onStart:function(){
-        this._targets[0].classList.remove('active');
-
-
-   
-      }
-    })
-
+  // define the next circle (if reaching the end return to tthe first circle)
    var nextCircle = currentPointMin.nextElementSibling != undefined ? currentPointMin.nextElementSibling : document.querySelector('svg g.mintemp circle:first-of-type');
-
-    gsap.to(nextCircle,{
-      duration:1,
-      delay:0,
-      r:5,
-      stroke:'red',
-      onStart:function(){
-        this._targets[0].classList.add('active');
-     
-
-      }
-    })
+   
+  // change the next cirecle to the active state
+  gsap.to(nextCircle,{
+    duration:1,
+    delay:0,
+    r:5,
+    stroke:'red',
+    onStart:function(){
+      this._targets[0].classList.add('active');
+    }
+  })
 
   
 
@@ -450,7 +543,7 @@ function nextDayPoints(){
 
 }
 
-
+// the function of changing the position of the colored circle on svg graph to the previous circle with animation
 function previoustDayPoints(){
 
   var currentPointMax = document.querySelector('svg g.maxtemp circle.active');
@@ -459,8 +552,7 @@ function previoustDayPoints(){
       delay:0,
       r:3,
       ease:'elastic',
-      
-      stroke:'#fac000ff',
+      stroke:'#ffffffff',
       onStart:function(){
         this._targets[0].classList.remove('active');
 
@@ -476,7 +568,6 @@ function previoustDayPoints(){
       stroke:'red',
       onStart:function(){
         this._targets[0].classList.add('active');
-
       }
     })
 
@@ -492,10 +583,7 @@ function previoustDayPoints(){
       delay:0,
       r:3,
       ease:'elastic',
-      
-      stroke:'#fac000ff',
-      
-      
+      stroke:'#ffffffff',
       onStart:function(){
         this._targets[0].classList.remove('active');
       }
@@ -521,10 +609,8 @@ function previoustDayPoints(){
 
 
 
-
+// creating the each hour div containing the weather data of that day
 function createTimes(allHoursData,astro){
-
-
 
   var times = document.querySelector('.times')
   times.innerHTML = `
@@ -537,24 +623,14 @@ function createTimes(allHoursData,astro){
 
   console.log(sunrise,sunset)
 
-
-  
-
-  
   for(var i = 0 ; i< 24 ;i++){
-
-  
-
-   
 
     var time = document.createElement('div');
     time.setAttribute('time',i)
     time.classList.add('time');
 
   
- 
-   
-    // sunrise
+    
     if(i< sunrise ){
        time.style.background = 'var(--bg-color-transparent)'
     }else if(i == sunrise){
@@ -577,12 +653,6 @@ function createTimes(allHoursData,astro){
 
     }
    
-
-
-   
-
-  
-
     var divIamge= document.createElement('div');
     divIamge.classList.add('img')
     divIamge.innerHTML = `<img src="https:${allHoursData[i].condition.icon}" alt="" />`
@@ -597,73 +667,21 @@ function createTimes(allHoursData,astro){
 
     
 
-    
-   
-
-  times.append(time)
-
-
- 
-
+  times.append(time);
 
 }
 
+// animating the divs of the hour data
 gsap.from('div.times div.time',{
   duration:0.5,
   opacity:0,
   scale:0,
-  
   stagger:{
     each:0.05,
-    from:'center'
+    from:'start'
   },
-  // y:200,
-  // x:200
+
 })
-
-}
-
-
-// fetch weather data
-
-function getWeatherData(){
-
-  var API = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${City}&days=${7}&aqi=no`
-
-
-  var newPromes = new Promise((resolve,reject)=>{
-
-
-    var request = new XMLHttpRequest();
-    request.open('GET',API);
-    request.send();
-
-    request.addEventListener('load',(eve)=>{
-      // console.log(request.response)
-      resolve( JSON.parse(request.response) )
-    })
-
-    request.addEventListener('error',eve=>reject())
-
-
-  })
-
-  newPromes.then(result=>{
-    weatherData = result;
-    
-    display(result);
-
-   
-
-    next14dDay(result['forecast']['forecastday'])
-    
-
-    
-    
-    
-  
-  })
-
 
 }
 
@@ -671,124 +689,7 @@ function getWeatherData(){
 
 
 
-
-// search ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-var searchInput  = document.getElementById('search');
-var ulList = document.getElementById('cities-list')
-
-searchInput.addEventListener('input',function(eve){
-  
-
-  if(/ +/.test(eve.target.value) || eve.target.value.length == 0){
-    console.log('there is a spces')
-    ulList.innerHTML = ""
-  }else{
-    searchCity(eve.target.value)
-  }
-  
-})
-
-function searchCity(q){
-  var request = new XMLHttpRequest();
-  request.open('GET',`https://api.weatherapi.com/v1/search.json?key=${API_KEY}&q=${q}&aqi=no`)
-  request.send();
-
-  request.addEventListener('readystatechange',(eve)=>{
-    if(request.readyState == 4){
-      var result = JSON.parse(request.response) 
-     
-
-      
-      var str = ``
-
-      for(var i = 0 ; i <result.length ; i++ ){
-
-        str+=`
-        <li> ${result[i].name} </li>`
-
-      }
-      ulList.innerHTML = str
-    }
-  })
-}
-
-ulList.addEventListener('click',function(eve){
-
- 
-  City = eve.target.innerText
-  getWeatherData()
-  
-  ulList.innerHTML = ""
-  searchInput.value = ""
-})
-document.body.addEventListener('click',(eve)=>{
-  ulList.innerHTML =''
-  
-})
-
-
-
-// subscribe button
-
-
-document.getElementById('subscribe-btn').addEventListener('click',function(eve){
-  
-  console.log(this)
-  const banner = document.createElement('p')
-  banner.classList.add('position-absolute','text-center','banner')
-  const emailInput = document.querySelector('footer input')
-  console.log(emailInput.value)
-  if(/^[a-zA-Z][a-zA-Z0-9\._]*@[a-zA-Z][a-zA-Z0-9\._]*(\.[a-zA-Z][a-zA-Z0-9]*)+/i.test(emailInput.value)){
-    console.log(true)
-
-    emailInput.value = null
-    banner.classList.add('valid')
-    banner.innerHTML = 'subscribed successfully' 
-    
-
-    emailInput.after(banner)
-
-    const timeId = setTimeout(() => {
-      gsap.to(banner,{
-        duration:1,
-        opacity:0,
-        onComplete:()=>{
-          banner.remove();
-          clearTimeout(timeId)
-        }
-      })
-      
-    }, 1000);
-
-  }else{
-    console.log(false)
-    banner.classList.add('invalid')
-
-
-    banner.innerHTML = 'invaild email' 
-    
-    emailInput.after(banner)
-
-    const timeId = setTimeout(() => {
-      gsap.to(banner,{
-        duration:1,
-        opacity:0,
-        onComplete:()=>{
-          banner.remove();
-          clearTimeout(timeId)
-        }
-      })
-      
-    }, 1000);
-  }
-
-})
-// -----------
-
-
-
-// nav menu
+// nav menu  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 document.querySelector('nav i').addEventListener('click',function(eve){
   
@@ -805,7 +706,7 @@ document.querySelector('nav i').addEventListener('click',function(eve){
 // nav links handler
 
 document.querySelector('nav ul').addEventListener('click',(eve)=>{
-   document.querySelector('nav ul').classList.toggle('active');
+  document.querySelector('nav ul').classList.toggle('active');
 
   document.querySelector('nav i').classList.remove('fa-close')
   document.querySelector('nav i').classList.add('fa-bars')
@@ -832,102 +733,5 @@ document.querySelector('a[href="#home"]').addEventListener('click',(eve)=>{
   
 })
 
+// -----------------------------------------------------------------------------------------------------
 
-// change background according to the city 
-
-// async function changeBackground(){
-
-//   console.log(weatherData.forecast.forecastday[DAY].day.condition.text)
-
-//   var request = await fetch(`https://api.pexels.com/v1/search?query=${weatherData.forecast.forecastday[DAY].day.condition.text} weather &per_page=4`,{
-//     headers:{
-//       Authorization:'563492ad6f91700001000001cd5b824ebbbd4944ba1e8e3ae5465024'
-//     }
-//   })
-
-//   var result = await request.json()
-//   var bg = document.querySelector('div.bg')
-//   if(window.width > 450){
-//         bgy.style.cssText = `
-//     background:
-//     url('${result.photos[1].src.landscape}') center / cover no-repeat ,
-//     linear-gradient(#4facfe, #00f2fe) center / contain 
-//     ;
-//     `
-//   }else{
-//         bg.style.cssText = `
-//     background:
-//     url('${result.photos[1].src.portrait}') center / cover no-repeat ,
-//     linear-gradient(#4facfe, #00f2fe) center / contain 
-//     ;
-//     `
-//   }
-
-
-
-//   console.log(result.photos[0].src.landscape)
-//   console.log(result.photos[0].src.portrait)
-//   console.log(result)
-
-// }
-
-// changeBackground()
-
-
-// function createRotary(){
-
-//   var rotary = document.querySelector('.rotary')
-
-//   var str = '';
-
-//   for(var i = 0 ; i< 24 ;i++){
-
-//     var rotationZ= ((i+6.5)/24)*360 ;
-
-//     var time = document.createElement('div');
-//     time.setAttribute('time',i)
-//     time.classList.add('time');
-//     time.style.transform = `rotateZ(${rotationZ}deg) translateX(170px)`
-
-//     var innerTime = document.createElement('div');
-    
-//     time.append(innerTime)
-
-
-
-//     var divIamge= document.createElement('div');
-//     divIamge.classList.add('img')
-//     divIamge.style.transform = `rotateZ(-${rotationZ}deg)`
-//     divIamge.innerHTML = `<img src="https:${allDayData.hour[i].condition.icon}" alt="" />`
-
-//     var pTemp = document.createElement('p')
-//     pTemp.style.transform = `rotateZ(-${rotationZ}deg)`
-//     pTemp.innerHTML = `${allDayData.hour[i].temp_c}ْ`;
-
-//     var pClock = document.createElement('p');
-//     pClock.style.transform = `rotateZ(-${rotationZ}deg)`
-//     pClock.innerHTML = `${i%12 == 0 ? 12 : i%12}  `
-
-//     innerTime.append(pClock,pTemp,divIamge)
-
-    
-
-    
-//     // innerTime.innerHTML= `
-  
-//     //           <div class="img">
-//     //             <img src="https:${allDayData.hour[i].condition.icon}" alt="" />
-//     //           </div>
-              
-//     //           <p>${allDayData.hour[i].temp_c}ْC</p>
-//     //           <p>${i} </p>
-//     // `
-
-//   rotary.append(time)
-
- 
-
-
-// }
-// }
-// createRotary()

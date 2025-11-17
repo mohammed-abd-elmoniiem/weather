@@ -1,11 +1,12 @@
 
+/* global */
 *{
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 :root{
-  --bg-color-transparent:#0000009d;
+  --bg-color-transparent:#0000007e;
   --bg-color-transparent-white:#ffffff11;
   --text-color:#f8f8f8;
   --bg-dark:#222222;
@@ -23,15 +24,14 @@
   scroll-padding-top: 55px;
 
 }
-*{
-  /* border: 0.5px red solid; */
-}
+
 
 
 ::placeholder{
   text-transform: capitalize;
   font-size: 15px;
 }
+
 a{
   text-decoration: none;
   display: block;
@@ -74,41 +74,17 @@ body{
  
     z-index: 2;
     background: linear-gradient(#000013 60%, black 80%);
-    /* background: 
-    
-
-    linear-gradient(transparent,rgba(0, 0, 0, 0.897)),
-    
-   
-
-    
-    linear-gradient(45deg,
-    #007d8628,
-    #3d3d3d2f),
-    linear-gradient(-45deg
-    ,#000000de,
-    #00000069),
-
-    radial-gradient(circle, #ffffff23 0%,
-        transparent 10% 50%,
-        #ffffff1c 50% 60%,
-        #00000000 60%) center / 20px 20px,
-    
-    
-    linear-gradient( -45deg, #0d013afd  , #001235 ,#002358,#004966,#006e8a ,#00ffff); */
-    
-   
-
     color: var(--text-color) !important;
     text-shadow:var(--text-shadow);
-
-    /* transition: background 0.5s; */
-    /* backdrop-filter: blur(10px); */
     min-height: 100vh;
-
-   
-   
 }
+
+
+/* end of the global */
+
+
+
+/* stert of the nav  */
 
 h1{
   text-transform: capitalize;
@@ -117,7 +93,6 @@ h1{
 nav{
   
     background: var(--bg-color-transparent);
-  /* background-color: var(--bg-dark) !important; */
     justify-self: flex-start !important;
     height: 50px;
     position: relative;
@@ -126,20 +101,18 @@ nav{
     position: sticky;
     top: 2px;
     z-index: 60 ;
-    /* backdrop-filter: blur(15px); */
     border: 1px solid var(--bg-color-transparent-white);
-
-  
    
-  }
+}
+
+
 
 nav i {
   font-size: 25px;
 }
 
-/* nav menu */
+
 nav ul{
-  
   
   display: flex;
   flex-direction: column;
@@ -158,12 +131,11 @@ nav ul{
   margin: 0;
 }
 
+
 .active {
   transform: scaleY(1) !important;
 }
 nav ul li{
-
-
   text-align: center;
   font-size: 15px;
 }
@@ -184,31 +156,26 @@ nav ul li a{
 
 
 
-/* end of the nav */
+
 
 
 /* start of the header  */
-div.card *{
-  /* border: red 1px solid; */
-}
+
 
 div.card1{
     background-color: var(--bg-color-transparent);
-    
     color: inherit;
     backdrop-filter: blur(2px);
-
     display: grid;
     grid-template-columns: repeat(2,1fr);
-    
     border: 1px solid var(--bg-color-transparent-white);
    
   }
   
 
-  div.find{
-    grid-column: 1/-1;
-  }
+div.find{
+  grid-column: 1/-1;
+}
 
 
 div.find {
@@ -231,15 +198,7 @@ input[type='search'] {
     width: 100%;
 }
 
-/* input[type='search']::placeholder {
-  color: var(--text-color) !important;
 
-} */
-
-/* input:focus {
-  box-shadow: none !important;
-  border: 1px solid var(--main-color);
-} */
 
 
 
@@ -250,9 +209,6 @@ ul#cities-list {
   z-index: 10;
   background-color: var(--bg-color-transparent);
   backdrop-filter: blur(75px);
-  /* border: 1px solid var(--bg-color-transparent-white); */
-
-
   border-radius: 8px;
   padding: 0;
  
@@ -271,19 +227,22 @@ ul#cities-list li:hover {
 div.location{
   grid-column: 1/-1;
 }
+
 div.condition{
   grid-column: 1/-1;
-  /* grid-row: 2/4; */
 }
 
 div.times{
   grid-column: 1/-1;
 }
+
 div.location>p:first-of-type{
-      font-size: 35px;
-      font-weight: 400;
-      text-transform: uppercase;
-    }
+  font-size: 35px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+
 div.location div.time p{
   font-size: 17px !important;
   font-weight: 400px;
@@ -292,7 +251,6 @@ div.location div.time p{
 
 div.condition{
   display: flex;
-  /* flex-direction: column; */
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
@@ -302,6 +260,8 @@ div.condition{
 div.condition p{
   font-size: 55px !important;
 }
+
+
 div.condition div.image{
   width: fit-content;
 }
@@ -320,29 +280,33 @@ div.condition div.image{
   border-radius: 8px;
   padding: 15px;
  
-
-  
  }
+
+
  div.info>div{
   display: flex;
   justify-content:flex-start;
   align-items: center;
   gap: 5px;
  }
+
+
 div.info>div>span{
   font-weight: 300;
   font-size: 15px;
 }
+
+
 div.info i{
   font-size: 18px;
 }
 
 
- div.info p{
+div.info p{
   text-align: end;
   font-size: 19px;
   font-weight: 300;
- }
+}
 
 /* start of days */
 svg {
@@ -375,7 +339,7 @@ div.next-days {
   overflow-x: auto;
   overflow-y: hidden;
   width: 100%;
-  /* padding-left: 20px; */
+
 }
 
 span.small-info {
@@ -415,14 +379,11 @@ display: flex;
 width: 100%;
 overflow-x: scroll;
 background: var(--bg-color-transparent-white);
-/* padding: 3px; */
 border-radius: 8px;
   border: 1px solid var(--bg-color-transparent-white);
 }
 
-div.times * {
-/* border: lightpink 1px solid; */
-}
+
 
 div.times div.time {
 display: flex;
@@ -444,7 +405,6 @@ padding-bottom: 10px;
   position: absolute;
   bottom: 84%;
   left: 2px;
-  /* border-top: 5px solid var(--text-color);   */
   width: max-content;
   z-index: 35;
  
@@ -468,12 +428,10 @@ div.times div.time.active{
 /* start of contact section */
 
 section.contact{
-  /* background-color: var(--bg-color-transparent); */
+ 
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* display: none; */
-
   background: var(--bg-color-transparent);
   border: 1px solid var(--bg-color-transparent-white);
 }
@@ -485,8 +443,8 @@ section.contact div.contact-us{
 }
 
 section.contact div.contact-us h2{
-    font-weight: 300;
-    text-transform: capitalize;
+  font-weight: 300;
+  text-transform: capitalize;
   
 }
 
@@ -502,20 +460,20 @@ section.contact div.contact-info{
 }
 
 section.contact div.contact-info textarea{
-    width: 100%;
-    background: var(--bg-color-transparent-white) !important;
-      color: var(--text-color);
-      border: none;
-      padding: 8px 4px;
-      padding-left: 10px;
-      border-radius: 25px;
-      border: transparent 1px solid;  
-      outline: none;
-      min-height: 50px;
-      max-height: 200px;
-      overflow-y: auto;
-      font-size: 14px;
-      font-weight: 300;
+  width: 100%;
+  background: var(--bg-color-transparent-white) !important;
+  color: var(--text-color);
+  border: none;
+  padding: 8px 4px;
+  padding-left: 10px;
+  border-radius: 25px;
+  border: transparent 1px solid;  
+  outline: none;
+  min-height: 50px;
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 14px;
+  font-weight: 300;
 }
 
 section.contact div.contact-info textarea:focus{
@@ -534,7 +492,9 @@ section.contact div.contact-info button{
 
 /* end contact section */
 
-    /* start of the footer*/
+
+
+/* start of the footer*/
 input:focus{
   outline:  none !important;
 }
@@ -546,6 +506,8 @@ footer{
 footer div.inner-footer{
   max-width: 600px;
 }
+
+
 footer div.subscribe input,
 section input{
   background: var(--bg-color-transparent-white) !important;
@@ -559,11 +521,11 @@ section input{
 }
 
 footer div.subscribe input:focus ,
- input:focus{
+input:focus{
   border: var(--main-color) 1px solid;
 }
+
 footer div.subscribe input::placeholder{
-  /* padding-left: 5px; */
   font-size: 15px;
 }
 
@@ -577,26 +539,27 @@ footer div.subscribe button{
   color: var(--text-colort);
  
 }
+
+
 footer div.social a{
   padding: 4px;
   border-radius: 50%;
   width: 40px;
   height: 40px; 
-   background-color: var(--bg-color-transparent-white);
-   display: flex;
-   align-items: center;
-   justify-content: center;
+  background-color: var(--bg-color-transparent-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+
 footer div.social i{
   font-size: 20px;
- 
   color: var(--text-color);
 
 }
 
-footer div.copyright{
-  
-}
+
 footer div.copyright strong{
   font-size: 15px !important;
   font-weight: 300;
@@ -605,13 +568,14 @@ footer div.copyright strong{
 
 .banner{
   font-size: 13px;
-  /* border: red 1px solid; */
   left: 50%;
   transform: translateX(-50%);
 }
+
 .invalid{
   color: red;
 }
+
 .valid{
   color: rgb(0, 109, 0);
 }
@@ -635,22 +599,22 @@ footer div.copyright strong{
 
   nav ul {
   
-      display: flex;
-      flex-direction: row;
-      position: static !important;
-      
-      background-color: transparent !important;
-      /* backdrop-filter: blur(15px); */
- 
-      transform: none;
+    display: flex;
+    flex-direction: row;
+    position: static !important;
     
-   
-    }
+    background-color: transparent !important;
+    /* backdrop-filter: blur(15px); */
+
+    transform: none;
   
-    nav ul li {
-      opacity: 1 !important;
-    
-    }
+  
+  }
+  
+  nav ul li {
+    opacity: 1 !important;
+  
+  }
   
   
 
@@ -658,18 +622,22 @@ footer div.copyright strong{
 
   div.card1 {
       
-      grid-template-columns: repeat(4, 1fr);
-      /* grid-template-rows: repeat(3,200px); */
-  
-    }
-  div.location {
+    grid-template-columns: repeat(4, 1fr);
+    /* grid-template-rows: repeat(3,200px); */
 
+  }
+
+  div.location {
     grid-column: 1/3;
   }
+
+
   div.find{
     grid-row: 1/2;
     grid-column: 3/-1;
   }
+
+
   div.next-days{
     grid-column: 3/-1;
     grid-row: 2/ 3;
@@ -677,108 +645,25 @@ footer div.copyright strong{
   }
  
   
-    div.condition {
-      grid-column: 1/3;
-      grid-row: 2/3;
-   flex-direction: column;
-      
-          /* display: flex;
-       
-          justify-content: flex-start;
-          align-items: flex-start; */
+  div.condition {
+    grid-column: 1/3;
+    grid-row: 2/3;
+    flex-direction: column;
         
-    }
+  }
   
-    div.times {
-      grid-column: 1/-1;
-    }
+  div.times {
+    grid-column: 1/-1;
+  }
 
   div.condition p{
     font-size: 85px !important;
     font-weight: 400;
     text-align: start;
   }
-  /* div.condition>div{
-    width: 100% !important  ;
-    display: flex;
-    align-items: center;
-    width: 80px;
-  } */
-
+ 
   div.condition img{
-width: auto;
+    width: auto;
   }
   
- }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- /* dash */
-
- /* 
- div.rotary {
-   position: relative;
-   transform: translate(50%, 270px);
-
- }
-
- div.rotary div.time {
-
-   height: fit-content;
-   display: flex;
-
-   width: fit-content;
-
-   font-weight: 300;
-   font-size: 12px;
-   transform-origin: center bottom;
-   position: absolute;
-
-
-
-
-
- }
-
- div.rotary div.time>div {
-   display: flex;
-   gap: 15px;
-   flex-direction: row;
-   align-items: center;
-   width: 100px;
-   height: 30px;
-
-   color: #222222;
- }
-
- div.rotary div.time * {
-   height: fit-content;
-
- }
-
- div.rotary div.time div.img {
-   width: 35px;
- }
-
- div.rotary div.time div.img img {
-   width: 100%;
- }
- */
+}
